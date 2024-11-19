@@ -1,0 +1,22 @@
+{% extends 'reservations/base.html' %}
+{% block title %}
+<h1>Your Bookings</h1>
+{% endblock %}
+
+{% block content %}
+{% if bookings %}
+    <ul>
+    {% for booking in bookings %}
+        <li>
+            Table {{ booking.table.table_number }} on {{ booking.date }} at {{ booking.time }}
+            <form action="{% url 'cancel_booking' booking.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no bookings.</p>
+{% endif %}
+{% endblock %}
